@@ -124,59 +124,74 @@ namespace ProjetWPF
 
         private void btnAjoutFilm_Click(object sender, RoutedEventArgs e)
         {
-            if(txtFilm.Text == "")
+            if(cboGenreFilm.SelectedItem != null || txtNomGenre.Text != "")
             {
-                MessageBox.Show("Saisir un titre du film", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                if(txtNbEntrees.Text == "")
+                if (txtFilm.Text == "")
                 {
-                    MessageBox.Show("Saisir un nombre d'entrées", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Saisir un titre du film", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
-                    if(txtNomRealisateur.Text == "")
+                    if (txtNbEntrees.Text == "")
                     {
-                        MessageBox.Show("Saisir un nom de réalisateur", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Saisir un nombre d'entrées", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
                     {
-                        if(txtPrenomRealisateur.Text == "")
+                        if (txtNomRealisateur.Text == "")
                         {
-                            MessageBox.Show("Saisir un prenom de réalisateur", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("Saisir un nom de réalisateur", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         else
                         {
-                            List<Film> lstNouveauxFilms = new List<Film>();
-                            List<Acteur> lesActeurs = new List<Acteur>();
-                            Realisateur newRealisateur = new Realisateur(txtNomRealisateur.Text, txtPrenomRealisateur.Text, "Images/NewRealisateur.png");
-                            Film newFilm = new Film(txtFilm.Text, Convert.ToInt32(txtNbEntrees.Text), "Images/NewFilm.png" , newRealisateur);
-
-                            //(lstImagesActeurs.SelectedItems as List<Acteur>).ForEach(acteur =>
-                            //{
-                            //    lesActeurs.Add(acteur);
-                            //    newFilm.AjouterActeur(acteur);
-                            //});
-
-                            newFilm.LesActeurs = lstImagesActeurs.SelectedItems as List<Acteur>;
-
-
-                            if (txtNomGenre.Text != "")
+                            if (txtPrenomRealisateur.Text == "")
                             {
-                                lstNouveauxFilms.Add(newFilm);
-                                dicoFilms.Add(txtNomGenre.Text, lstNouveauxFilms);
-                                lesGenresFilms.Add(txtNomGenre.Text);
-                                cboGenreFilm.ItemsSource = lesGenresFilms;
+                                MessageBox.Show("Saisir un prenom de réalisateur", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
                             }
                             else
                             {
-                                dicoFilms[cboGenreFilm.SelectedItem as string].Add(newFilm);
+                                List<Film> lstNouveauxFilms = new List<Film>();
+                                Realisateur newRealisateur = new Realisateur(txtNomRealisateur.Text, txtPrenomRealisateur.Text, "Images/NewRealisateur.png");
+                                Film newFilm = new Film(txtFilm.Text, Convert.ToInt32(txtNbEntrees.Text), "Images/NewFilm.png", newRealisateur);
+
+                                // lstImagesActeurs.Items : il donne tous les acteurs
+                                foreach (Acteur a in lstImagesActeurs.SelectedItems)
+                                {
+                                    newFilm.AjouterActeur(a);
+                                }
+
+                                if (txtNomGenre.Text != "")
+                                {
+                                    if (!dicoFilms.ContainsKey(txtNomGenre.Text))
+                                    {
+                                        lstNouveauxFilms.Add(newFilm);
+                                        dicoFilms.Add(txtNomGenre.Text, lstNouveauxFilms);
+                                    }
+                                    else
+                                    {
+                                        dicoFilms[txtNomGenre.Text].Add(newFilm);
+                                    }
+                                }
+                                else
+                                {
+                                    dicoFilms[cboGenreFilm.SelectedItem as string].Add(newFilm);
+                                }
+
+                                lesGenresFilms.Add(txtNomGenre.Text);
+                                cboGenreFilm.ItemsSource = lesGenresFilms;
+
+                                lstFilms.Items.Refresh();
+                                lstActeurs.Items.Refresh();
                             }
                         }
                     }
                 }
             }
+            else
+            {
+                MessageBox.Show("Selectionnez un genre du film ou bien Saisir un genre", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
     }
 }

@@ -70,9 +70,9 @@
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{Binding PhotoFilm}" Width="50" Height="50" />
-                            <TextBlock Width="100" Text="{Binding TitreFilm}"></TextBlock>
-                            <TextBlock Width="100" Text="{Binding LeRealisateur.NomRealisateur}"></TextBlock>
-                            <TextBlock Width="100" Text="{Binding LeRealisateur.PrenomRealisateur}"></TextBlock>
+                            <TextBlock VerticalAlignment="Center" Width="100" Text="{Binding TitreFilm}"></TextBlock>
+                            <TextBlock VerticalAlignment="Center"  Width="100" Text="{Binding LeRealisateur.NomRealisateur}"></TextBlock>
+                            <TextBlock VerticalAlignment="Center"  Width="100" Text="{Binding LeRealisateur.PrenomRealisateur}"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -142,7 +142,7 @@
                     <Button x:Name="btnAjoutFilm" Click="btnAjoutFilm_Click" Foreground="White" Background="Coral" FontSize="20" Content="Ajouter un film"></Button>
                 </StackPanel>
 
-                <ListView Grid.Column="1" SelectionMode="Multiple" Name="lstImagesActeurs" ItemTemplate="{StaticResource ResourceKey=tplListeActeurs}">
+                <ListView Grid.Column="1" SelectionMode="Multiple"   Name="lstImagesActeurs" ItemTemplate="{StaticResource ResourceKey=tplListeActeurs}">
                     <!--<ListView.ItemTemplate>
                         <DataTemplate>
                             <WrapPanel >
